@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CharStatus } from "../../utils/statuses";
 
 const StyledKey = styled.button`
   font-family: inherit;
@@ -10,7 +11,7 @@ const StyledKey = styled.button`
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  background-color: #818384;
+  //background-color: #818384;
   color: #ffffff;
   flex: 1;
   display: flex;
@@ -22,6 +23,7 @@ const StyledKey = styled.button`
 
 interface KeyProps {
   value: string;
+  status?: CharStatus;
   onClick: (value: string) => void;
 }
 
@@ -30,7 +32,11 @@ const Key: React.FC<KeyProps> = (props: KeyProps) => {
     props.onClick(props.value);
   };
 
-  return <StyledKey onClick={handleClick}>{props.value}</StyledKey>;
+  return (
+    <StyledKey className={props.status ?? "key"} onClick={handleClick}>
+      {props.value}
+    </StyledKey>
+  );
 };
 
 export default Key;

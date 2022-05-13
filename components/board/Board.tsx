@@ -6,7 +6,7 @@ import CurrentRow from "./CurrentRow";
 import EmptyRow from "./EmptyRow";
 
 const Container = styled.div`
-  margin: 20px;
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,6 +29,7 @@ interface BoardProps {
   solution: string;
   guesses: string[];
   currentGuess: string;
+  isRevealing: boolean;
 }
 
 const Board: React.FC<BoardProps> = (props: BoardProps) => {
@@ -41,7 +42,12 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
     <Container>
       <StyledBoard>
         {props.guesses.map((guess, i) => (
-          <CompletedRow key={i} solution={props.solution} guess={guess} />
+          <CompletedRow
+            key={i}
+            solution={props.solution}
+            guess={guess}
+            isRevealing={props.isRevealing}
+          />
         ))}
         {props.guesses.length < MAX_GUESSES && (
           <CurrentRow length={props.solution.length} guess={props.currentGuess} />

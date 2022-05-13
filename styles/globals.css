@@ -16,3 +16,23 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.key {
+  background-color: #818384;
+}
+
+.empty {
+  border: 2px solid #3a3a3c;
+}
+
+.absent {
+  background-color: #3a3a3c;
+}
+
+.present {
+  background-color: #b59f3b;
+}
+
+.correct {
+  background-color: #538d4e;
+}
