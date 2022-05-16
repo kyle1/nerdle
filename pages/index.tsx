@@ -1,26 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { NextPage } from "next";
 import styled from "styled-components";
 
 import Board from "../components/board/Board";
 import Keyboard from "../components/keyboard/Keyboard";
 import { MAX_GUESSES, TILE_FLIP_TIME_MS } from "../constants/settings";
-import Modal from "../components/Modal";
 
 const solution = "FROST"; //for testing
-
-const Title = styled.div`
-  margin: 10px;
-  //font-family: "nyt-karnakcondensed";
-  font-weight: 700;
-  font-size: 37px;
-  line-height: 100%;
-  letter-spacing: 0.01em;
-  text-align: center;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-`;
 
 const Container = styled.div`
   width: 100%;
@@ -76,43 +62,25 @@ const Home: NextPage = () => {
     setGuesses([...guesses, currentGuess]);
     setCurrentGuess("");
     if (currentGuess === solution) {
-      console.log("u win");
       setIsGameWon(true);
       setShowGameOverModal(true);
     } else if (guesses.length === MAX_GUESSES - 1) {
-      console.log("u lose");
       setIsGameLost(true);
       setShowGameOverModal(true);
     }
   };
 
   return (
-    <div>
-      {showGameOverModal && (
-        <Modal
-          onConfirm={() => console.log("confirmed")}
-          onClose={() => setShowGameOverModal(false)}
-        >
-          <div>You {isGameWon ? "won!" : "lost!"}</div>
-        </Modal>
-      )}
-      <Title>Nerdle</Title>
-      <Container>
-        <Board
-          solution={solution}
-          guesses={guesses}
-          currentGuess={currentGuess}
-          isRevealing={isRevealing}
-        />
-        <Keyboard
-          solution={solution}
-          guesses={guesses}
-          onChar={handleChar}
-          onEnter={handleEnter}
-          onBackspace={handleBackspace}
-        />
-      </Container>
-    </div>
+    <Container>
+      <Board solution={solution} guesses={guesses} currentGuess={currentGuess} isRevealing={isRevealing} />
+      <Keyboard
+        solution={solution}
+        guesses={guesses}
+        onChar={handleChar}
+        onEnter={handleEnter}
+        onBackspace={handleBackspace}
+      />
+    </Container>
   );
 };
 
