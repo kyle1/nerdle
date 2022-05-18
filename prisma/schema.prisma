@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id                Int             @id @default(autoincrement())
+  emailAddress      String
+  accountPassword   String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  results           PuzzleResult[]
+  guesses           PuzzleGuess[]
+}
+
+model Puzzle {
+  id                Int             @id @default(autoincrement())
+  puzzleDate        DateTime        @db.Date()
+  word              String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  results           PuzzleResult[]
+  guesses           PuzzleGuess[]
+}
+
+model PuzzleResult {
+  id                Int             @id @default(autoincrement())
+  puzzle            Puzzle          @relation(fields: [puzzleId], references: [id])
+  puzzleId          Int
+  user              Users           @relation(fields: [userId], references: [id])
+  userId            Int
+  startTime         DateTime
+  endTime           DateTime
+  guessCount        Int
+  isWin             Boolean
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model PuzzleGuess {
+  id                Int             @id @default(autoincrement())
+  puzzle            Puzzle          @relation(fields: [puzzleId], references: [id])
+  puzzleId          Int   
+  user              Users           @relation(fields: [userId], references: [id])
+  userId            Int   
+  word              String    
+  guessNumber       Int   
+  isMatch           Boolean   
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}

@@ -1,0 +1,24 @@
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
+
+CREATE TABLE IF NOT EXISTS users (
+	user_id					serial PRIMARY KEY,
+	email_address			text NOT NULL,
+	account_password		text NOT NULL,
+	dark_mode				boolean NOT NULL,
+	created_date			timestamp NOT NULL,
+	modified_date			timestamp NOT NULL
+);
+
+
+--to have prisma generate db tables from the models in schema.prisma, run cmd:
+--npx prisma migrate dev --name init
+
+
+INSERT INTO "Users" ("emailAddress", "accountPassword", "updatedAt")
+VALUES ('kyle13@gmail.com', 'abc123', NOW());
+
+
+INSERT INTO "Puzzle" ("puzzleDate", word, "updatedAt")
+VALUES ('2022-05-16', 'ENJOY', NOW());
