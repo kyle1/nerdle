@@ -27,6 +27,7 @@ interface KeyboardProps {
 }
 
 const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
+  console.log("Rendering Keyboard...");
   const statuses = getKeyStatuses(props.solution, props.guesses);
 
   const handleKeyClick = (value: string) => {

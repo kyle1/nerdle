@@ -22,3 +22,19 @@ VALUES ('kyle13@gmail.com', 'abc123', NOW());
 
 INSERT INTO "Puzzle" ("puzzleDate", word, "updatedAt")
 VALUES ('2022-05-16', 'ENJOY', NOW());
+
+
+INSERT INTO "Puzzle" ("puzzleDate", word, "updatedAt")
+VALUES ('2022-05-16', 'HELLO', NOW());
+
+
+INSERT INTO "Puzzle" ("puzzleDate", word, "updatedAt")
+VALUES ('2022-05-17', 'ENJOY', NOW());
+
+
+INSERT INTO "Puzzle" ("puzzleDate", word, "updatedAt")
+VALUES ('2022-05-18', 'REACT', NOW());
+
+
+INSERT INTO "PuzzleResult" ("puzzleId", "userId", "startTime", "endTime", "guessCount", "isWin", "updatedAt")
+VALUES (1, 1, NOW(), NOW(), 5, TRUE, NOW());
