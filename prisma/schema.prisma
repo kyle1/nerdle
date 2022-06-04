@@ -10,49 +10,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
+model users {
   id                Int             @id @default(autoincrement())
-  emailAddress      String
-  accountPassword   String
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  results           PuzzleResult[]
-  guesses           PuzzleGuess[]
+  email_address     String
+  account_password  String
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+  results           puzzle_result[]
+  guesses           puzzle_guess[]
 }
 
-model Puzzle {
+model puzzle {
   id                Int             @id @default(autoincrement())
-  puzzleDate        DateTime        @db.Date()
+  puzzle_date       DateTime        @db.Date()
   word              String
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  results           PuzzleResult[]
-  guesses           PuzzleGuess[]
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+  results           puzzle_result[]
+  guesses           puzzle_guess[]
 }
 
-model PuzzleResult {
+model puzzle_result {
   id                Int             @id @default(autoincrement())
-  puzzle            Puzzle          @relation(fields: [puzzleId], references: [id])
-  puzzleId          Int
-  user              Users           @relation(fields: [userId], references: [id])
-  userId            Int
-  startTime         DateTime
-  endTime           DateTime
-  guessCount        Int
-  isWin             Boolean
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  puzzle            puzzle          @relation(fields: [puzzle_id], references: [id])
+  puzzle_id         Int
+  user              users           @relation(fields: [user_id], references: [id])
+  user_id           Int
+  start_time        DateTime
+  end_time          DateTime
+  guess_count       Int
+  is_win            Boolean
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
 }
 
-model PuzzleGuess {
+model puzzle_guess {
   id                Int             @id @default(autoincrement())
-  puzzle            Puzzle          @relation(fields: [puzzleId], references: [id])
-  puzzleId          Int   
-  user              Users           @relation(fields: [userId], references: [id])
-  userId            Int   
+  puzzle            puzzle          @relation(fields: [puzzle_id], references: [id])
+  puzzle_id         Int   
+  user              users           @relation(fields: [user_id], references: [id])
+  user_id           Int   
   word              String    
-  guessNumber       Int   
-  isMatch           Boolean   
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  guess_number      Int   
+  is_match          Boolean   
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
 }
