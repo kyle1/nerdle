@@ -9,12 +9,21 @@ interface CompletedRowProps {
 }
 
 const CompletedRow: React.FC<CompletedRowProps> = (props: CompletedRowProps) => {
-  let statuses = getTileStatuses(props.solution, props.guess);
+  console.log("CompletedRow rendering...");
+  console.log(props);
+  const statuses = getTileStatuses(props.solution, props.guess);
 
   return (
     <StyledRow>
       {props.guess.split("").map((letter, i) => (
-        <Tile key={i} value={letter} isRevealing={props.isRevealing} status={statuses[i]} />
+        <Tile
+          key={i}
+          value={letter}
+          status={statuses[i]}
+          column={i}
+          isRevealing={props.isRevealing}
+          isCompleted
+        />
       ))}
     </StyledRow>
   );

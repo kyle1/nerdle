@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import Enumerable from "linq";
 import styled from "styled-components";
 
-import { API_BASE_URL } from "../constants/apiBaseUrl";
-import { PuzzleResult } from "../models/PuzzleResult";
+import { API_BASE_URL } from "../../constants/apiBaseUrl";
+import { PuzzleResult } from "../../models/PuzzleResult";
 import BarChart from "./BarChart";
+import Footer from "./Footer";
 
 const letterCount: number = 5; //for testing
 const rows = Array.from(Array(letterCount));
@@ -22,6 +23,15 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 16px;
+
+  h1 {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+  }
 `;
 
 const Statistics = styled.div`
@@ -55,6 +65,10 @@ const StatContainer = styled.div`
 interface StatsProps {}
 
 const Stats: React.FC<StatsProps> = (props: StatsProps) => {
+  const [results, setResults] = useState<PuzzleResult[]>([]);
+  const [winPercent, setWinPercent] = useState<number | null>(null);
+  const [currentStreak, setCurrentStreak] = useState<number | null>(null);
+  const [maxStreak, setMaxStreak] = useState<number | null>(null);
   const [resultCounts, setResultCounts] = useState<ResultCount[]>([]);
 
   const getResults = (userId: number) => {
@@ -63,27 +77,29 @@ const Stats: React.FC<StatsProps> = (props: StatsProps) => {
       .then((response) => response.json())
       .then(
         (results: PuzzleResult[]) => {
-          let counts: ResultCount[] = Enumerable.from(results)
-            .groupBy(
-              (r) => r.guessCount,
-              (r) => r,
-              (key: any, group: any): ResultCount => ({
-                guesses: key,
-                occurrences: group.count(),
-                percent: (group.count() / results.length) * 100,
-              })
-            )
-            .orderBy((r) => r.guesses)
-            .toArray();
-          let maxPercent = Math.max(...counts.map((c) => c.percent));
-          counts = counts.map((c) => ({
-            ...c,
-            adjustedPercent: (c.percent / maxPercent) * 100,
-          }));
-          setResultCounts(counts);
+          setResults(results);
+
+          const winPercent = getWinPercent(results);
+          setWinPercent(winPercent);
+
+          const currentStreak = results.length; //TODO: Get actual streak value
+          setCurrentStreak(currentStreak);
+
+          const maxStreak = results.length; //TODO: Get actual streak value
+          setMaxStreak(maxStreak);
         },
         (error) => console.log(error)
       );
+  };
+
+  const getWinPercent = (results: PuzzleResult[]): number => {
+    const winCount = Enumerable.from(results)
+      .where((r) => r.isWin)
+      .toArray().length;
+
+    const percent = (winCount / results.length) * 100;
+
+    return percent;
   };
 
   const userId: number = 1; //todo
@@ -94,23 +110,25 @@ const Stats: React.FC<StatsProps> = (props: StatsProps) => {
       <h1>Statistics</h1>
       <Statistics>
         <StatContainer>
-          <div className="stat">1</div>
+          <div className="stat">{results.length}</div>
           <div className="label">Played</div>
         </StatContainer>
         <StatContainer>
-          <div className="stat">100</div>
+          <div className="stat">{winPercent}</div>
           <div className="label">Win %</div>
         </StatContainer>
         <StatContainer>
-          <div className="stat">1</div>
+          <div className="stat">{currentStreak}</div>
           <div className="label">Current Streak</div>
         </StatContainer>
         <StatContainer>
-          <div className="stat">1</div>
+          <div className="stat">{maxStreak}</div>
           <div className="label">Max Streak</div>
         </StatContainer>
       </Statistics>
-      <BarChart resultCounts={resultCounts} />
+      <h1>Guess Distribution</h1>
+      <BarChart results={results} />
+      <Footer />
     </Container>
   );
 };

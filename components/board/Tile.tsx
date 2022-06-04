@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import styled from "styled-components";
 
 import { TILE_FLIP_TIME_MS } from "../../constants/settings";
@@ -28,15 +29,36 @@ interface TileProps {
   value?: string;
   status?: CharStatus;
   column?: number;
+  isCompleted?: boolean;
   isRevealing?: boolean;
 }
 
 const Tile: React.FC<TileProps> = (props: TileProps) => {
-  const flipDelay = `${props.column ?? 0 * TILE_FLIP_TIME_MS}ms`;
-  // const classes = status
+  //console.log("Tile rendering...");
+  //console.log(props);
+  const isFilled = props.value && !props.isCompleted;
+  const shouldReveal = props.isRevealing && props.isCompleted;
+  const animationDelay = `${(props.column ?? 0) * TILE_FLIP_TIME_MS}ms`;
 
-  // return <StyledTile className={props.isRevealing ? "cell-reveal" : ""}>{props.value}</StyledTile>;
-  return <StyledTile className={props.status ?? "empty"}>{props.value}</StyledTile>;
+  // const classes = classnames({
+  //   pop: isFilled,
+  //   correct: props.status === "correct",
+  //   present: props.status === "present",
+  //   absent: props.status === "absent",
+  //   empty: !props.status,
+  // });
+
+  const classes = classnames(props.status ?? "empty", {
+    pop: isFilled,
+    //"tile-reveal": shouldReveal,
+    "flip-in flip-out": shouldReveal,
+  });
+
+  return (
+    <StyledTile className={classes} style={{ animationDelay }}>
+      {props.value}
+    </StyledTile>
+  );
 };
 
 export default Tile;

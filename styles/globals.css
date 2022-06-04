@@ -53,3 +53,74 @@ a {
     opacity: 1;
   }
 }
+
+.flip-in {
+  animation-name: FlipIn;
+  animation-duration: 250ms;
+  animation-timing-function: ease-in;
+}
+
+@keyframes FlipIn {
+  0% {
+    transform: rotateX(0);
+    background-color: black;
+  }
+  100% {
+    transform: rotate(-90deg);
+    background-color: black;
+  }
+}
+
+.flip-out {
+  animation-name: FlipOut;
+  animation-duration: 250ms;
+  animation-timing-function: ease-in;
+}
+
+@keyframes FlipOut {
+  0% {
+    transform: rotateX(-90deg);
+    background-color: black;
+  }
+  100% {
+    transform: rotate(0);
+    background-color: black;
+  }
+}
+
+/* .tile-reveal {
+  animation-duration: 0.35s;
+  animation-timing-function: linear;
+  animation-fill-mode: backwards;
+}
+
+.cell-reveal.absent {
+  animation-name: revealAbsentCharCell;
+}
+
+.cell-reveal.correct {
+  animation-name: revealCorrectCharCell;
+}
+
+.cell-reveal.present {
+  animation-name: revealPresentCharCell;
+} */
+
+/* .tile-reveal {
+  animation-name: FlipIn;
+  animation-duration: 0.35s;
+  animation-timing-function: linear;
+  animation-fill-mode: backwards;
+} */
+
+/* .cell-reveal.absent {
+  animation-name: revealAbsentCharCell;
+}
+
+.cell-reveal.correct {
+  animation-name: revealCorrectCharCell;
+}
+
+.cell-reveal.present {
+  animation-name: revealPresentCharCell;
+} */

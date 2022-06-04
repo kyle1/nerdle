@@ -97,7 +97,8 @@ const Home: NextPage = () => {
 
   const getTodaysWord = () => {
     let date = dayjs().format("YYYY-MM-DD");
-    let url: string = `${API_BASE_URL}/puzzles/date/${date}`;
+    // let url: string = `${API_BASE_URL}/puzzles/date/${date}`;
+    let url: string = `${API_BASE_URL}/puzzles/date/2022-05-17`;
     fetch(url)
       .then((response) => response.json())
       .then(

@@ -6,7 +6,7 @@ import Instructions from "../components/Instructions";
 import Modal from "../components/Modal";
 import NavBar from "../components/NavBar";
 import Settings from "../components/Settings";
-import Stats from "../components/Stats";
+import Stats from "../components/statistics/Stats";
 import "../styles/globals.css";
 
 // function MyApp({ Component, pageProps }: AppProps) {
@@ -26,7 +26,10 @@ const App: React.FC<AppProps> = (props: AppProps) => {
         onSettingsClick={() => setShowSettingsModal(true)}
       />
       {showInstructionsModal && (
-        <Modal onConfirm={() => console.log("confirmed")} onClose={() => setShowInstructionsModal(false)}>
+        <Modal
+          onConfirm={() => console.log("confirmed")}
+          onClose={() => setShowInstructionsModal(false)}
+        >
           <Instructions />
         </Modal>
       )}
@@ -36,7 +39,10 @@ const App: React.FC<AppProps> = (props: AppProps) => {
         </Modal>
       )}
       {showSettingsModal && (
-        <Modal onConfirm={() => console.log("confirmed")} onClose={() => setShowSettingsModal(false)}>
+        <Modal
+          onConfirm={() => console.log("confirmed")}
+          onClose={() => setShowSettingsModal(false)}
+        >
           <Settings />
         </Modal>
       )}

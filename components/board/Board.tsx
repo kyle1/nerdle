@@ -34,6 +34,7 @@ interface BoardProps {
 
 const Board: React.FC<BoardProps> = (props: BoardProps) => {
   console.log("Rendering Board...");
+  console.log(props);
   const emptyRows =
     props.guesses.length < MAX_GUESSES - 1
       ? Array.from(Array(MAX_GUESSES - 1 - props.guesses.length))
@@ -47,7 +48,7 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
             key={i}
             solution={props.solution}
             guess={guess}
-            isRevealing={props.isRevealing}
+            isRevealing={props.isRevealing && props.guesses.length - 1 === i}
           />
         ))}
         {props.guesses.length < MAX_GUESSES && (
